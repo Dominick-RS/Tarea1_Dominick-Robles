@@ -35,9 +35,12 @@ def crear_ventana_Num():
 
 #Funcion para abir la ventana de análisi
 def abrir_ventana_Num():
-    esta_abierta(Ventana_Num) and Ventana_Num.lift()
-    (not esta_abierta(Ventana_Num)) and (contador >= 1) and messagebox.showwarning("Límite", "Máximo 2 ventanas abiertas.")
-    (not esta_abierta(Ventana_Num)) and (contador < 1) and crear_ventana_Num()
+    if esta_abierta(Ventana_Num):
+        Ventana_Num.lift()
+    elif contador >= 1:
+        messagebox.showwarning("Límite", "Máximo 2 ventanas abiertas.")
+    else:
+        crear_ventana_Num()
 
 #Funcion para volver al menú y cerrar la ventana de análisis
 def cerrar_ventana_Num():
@@ -72,9 +75,12 @@ def crear_ventana_Info():
 
 #Funcion para abir la ventana de información 
 def abrir_ventana_Info():
-    esta_abierta(ventana_Info) and ventana_Info.lift()
-    (not esta_abierta(ventana_Info)) and (contador >= 1) and messagebox.showwarning("Límite", "Máximo 2 ventanas abiertas.")
-    (not esta_abierta(ventana_Info)) and (contador < 1) and crear_ventana_Info()
+    if esta_abierta(ventana_Info):
+        ventana_Info.lift()
+    elif contador >= 1:      
+        messagebox.showwarning("Límite", "Máximo 2 ventanas abiertas.")
+    else:
+        crear_ventana_Info()
 
 #Funcion para cerrar la ventana de Información
 def cerrar_ventana_Info():
@@ -109,9 +115,12 @@ def crear_ventana_ani():
 
 #Funcion para abrir la ventana de animación
 def abrir_ventana_ani():
-    esta_abierta(ventana_ani) and ventana_ani.lift()
-    (not esta_abierta(ventana_ani)) and (contador >= 1) and messagebox.showwarning("Límite", "Máximo 2 ventanas abiertas.")
-    (not esta_abierta(ventana_ani)) and (contador < 1) and crear_ventana_ani()
+    if esta_abierta(ventana_ani):
+        ventana_ani.lift()
+    elif contador >= 1:      
+        messagebox.showwarning("Límite", "Máximo 2 ventanas abiertas.")
+    else:
+        crear_ventana_ani()
 
 #Funcion para cerrar la ventana
 def cerrar_ventana_ani():
