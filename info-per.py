@@ -1,0 +1,181 @@
+import tkinter as tk
+from tkinter import messagebox
+import os
+import pygame
+pygame.mixer.init()
+
+#Variables globales para el manejo de ventanas
+Ventana_Num = None
+ventana_Info = None
+ventana_ani = None
+contador = 0
+
+#Funcion que verifica si hay ventanas abiertas
+def esta_abierta(v):
+    return v is not None and v.winfo_exists()
+
+#Funcion para la ventana de analisis
+def crear_ventana_Num():
+    global Ventana_Num, contador
+    Ventana_Num = tk.Toplevel(menu)                  #Configuracion de la ventana de analisis
+    Ventana_Num.title("Análisis de números")
+    Ventana_Num.geometry("600x500")
+    Ventana_Num.resizable(False, False)
+    Ventana_Num.protocol("WM_DELETE_WINDOW", cerrar_ventana_Num)   #Manejo de ventanas
+    contador += 1    #Contador de ventana abierta
+
+ #Canva de la ventana de análisis
+    canva_num = tk.Canvas(Ventana_Num, width=600, height=500, bg="white")
+    canva_num.pack()
+
+ #Texto de análisis
+    Analisis = tk.Label(canva_num, text="Análisis de números ", background="white", font=("verdana", 18, "bold"))
+    Analisis.place(x=150, y=10)
+
+ #Boton para volver al menú
+    Volver_M = tk.Button(canva_num, text="Volver al Menú", command=lambda:cerrar_ventana_Num())
+    Volver_M.place(x=250, y=400)
+
+#Funcion para abir la ventana de análisi
+def abrir_ventana_Num():
+    if esta_abierta(Ventana_Num):
+        Ventana_Num.lift()
+    elif contador >= 1:
+        messagebox.showwarning("Límite", "Máximo 2 ventanas abiertas.")
+    else:
+        crear_ventana_Num()
+
+#Funcion para volver al menú y cerrar la ventana de análisis
+def cerrar_ventana_Num():
+    global Ventana_Num, contador
+    Ventana_Num.destroy()
+    Ventana_Num = None
+    contador -= 1   #Disminución en el contador
+    menu.lift()
+
+
+#Funcion para crear la ventana de información
+def crear_ventana_Info():
+    global ventana_Info, contador
+    ventana_Info = tk.Toplevel(menu)          #Configuración de la ventana información
+    ventana_Info.title("Ficha personal")
+    ventana_Info.geometry("800x700")
+    ventana_Info.resizable(False, False)
+    ventana_Info.protocol("WM_DELETE_WINDOW", cerrar_ventana_Info)  #Manejo de ventanas
+    contador += 1                               #Contador de ventana abierta
+
+ #Canva de la ventana información
+    canva_i = tk.Canvas(ventana_Info, width=780, height=660, bg="white")
+    canva_i.pack(side="left", fill="both")
+    scrollbar = tk.Scrollbar(ventana_Info, orient="vertical", command=canva_i.yview)
+    canva_i.configure(yscrollcommand=scrollbar.set)
+    scrollbar.pack(side="right", fill="y")
+    
+    frame_contenido = tk.Frame(canva_i, bg="white")
+    canva_i.create_window((0, 0), window=frame_contenido, anchor="nw")
+
+    def actualizar_scroll(event):
+        canva_i.configure(scrollregion=canva_i.bbox("all"))
+    frame_contenido.bind("<Configure>", actualizar_scroll)
+
+    labeli = tk.Label(frame_contenido, text="Ficha Personal",
+             bg="white", font=("verdana", 18, "bold"))
+    labeli.pack(padx=300, pady=10)
+
+    tk.Label(frame_contenido, text="Datos Personales",
+             bg="white", font=("verdana", 13, "bold")).pack(anchor="w", padx=20, pady=5)
+
+    tk.Label(frame_contenido, text="Nombre:   Dominick Robles Samudio",
+             bg="white", font=("verdana", 11)).pack(anchor="w", padx=40)
+    tk.Label(frame_contenido, text="Carnet:     2026093868",
+             bg="white", font=("verdana", 11)).pack(anchor="w", padx=40)
+    tk.Label(frame_contenido, text="Edad:       19 años",
+             bg="white", font=("verdana", 11)).pack(anchor="w", padx=40, pady=(0,10))
+
+
+
+ #Boton para volver al menú
+    Volver_i = tk.Button(canva_i, text="Volver al Menú", command=lambda:cerrar_ventana_Info())
+    Volver_i.place(x=250, y=400 )
+
+#Funcion para abir la ventana de información 
+def abrir_ventana_Info():
+    if esta_abierta(ventana_Info):
+        ventana_Info.lift()
+    elif contador >= 1:      
+        messagebox.showwarning("Límite", "Máximo 2 ventanas abiertas.")
+    else:
+        crear_ventana_Info()
+
+#Funcion para cerrar la ventana de Información
+def cerrar_ventana_Info():
+    global ventana_Info, contador
+    ventana_Info.destroy()
+    ventana_Info = None
+    contador -= 1
+    menu.lift()
+
+#Funcion para crear la ventana de la animación
+def crear_ventana_ani():
+    global ventana_ani, contador
+    ventana_ani = tk.Toplevel(menu)      #Configuración de la ventana de animación
+    ventana_ani.title("Animación")
+    ventana_ani.geometry("600x500")
+    ventana_ani.resizable(False, False)
+    ventana_ani.protocol("WM_DELETE_WINDOW", cerrar_ventana_ani)
+    contador += 1                        #Contador de ventana abierta
+
+ 
+    #canva para la ventana de animación
+    canva_a = tk.Canvas(ventana_ani, width= 600, height= 500, bg="white")
+    canva_a.pack()
+
+    #Texto de la ventana animacion
+    labela = tk.Label(canva_a, text="Animación", bg="white", font=("verdana", 18, "bold"))
+    labela.place(x=230, y= 10)
+
+
+#Funcion para abrir la ventana de animación
+def abrir_ventana_ani():
+    if esta_abierta(ventana_ani):
+        ventana_ani.lift()
+    elif contador >= 1:      
+        messagebox.showwarning("Límite", "Máximo 2 ventanas abiertas.")
+    else:
+        crear_ventana_ani()
+
+#Funcion para cerrar la ventana
+def cerrar_ventana_ani():
+    global ventana_ani, contador
+    ventana_ani.destroy()
+    ventana_ani = None
+    contador -= 1
+    menu.lift()
+
+#Configuracion del menú
+menu = tk.Tk()
+menu.title ("Menú")
+menu.geometry("600x600")
+menu.resizable(width=False, height=False)
+
+#Texto del menu
+labelm = tk.Label(menu, text="Menú", font=("Verdana", 20, "bold"))
+labelm.pack(pady=10)
+
+#Canva del menu
+canva_m = tk.Canvas(menu, width=800, height=600, bg="white")
+canva_m.pack()
+
+#Boton para abrir el análisis de números
+AnalizarN = tk.Button(canva_m, text="Abrir análisis de números", width=20, command=lambda: abrir_ventana_Num())
+AnalizarN.place(x=20, y=20)
+
+#Boton para ver la información personal
+Infor = tk.Button(canva_m, text="Mostrar información", width=20, command=lambda: abrir_ventana_Info())
+Infor.place(x=230, y=20)
+
+#Boton para abrir la ventana de animación
+anim = tk.Button(canva_m, text="Animación", width=20, command=lambda: abrir_ventana_ani())
+anim.place(x=430, y=20)
+
+menu.mainloop()
