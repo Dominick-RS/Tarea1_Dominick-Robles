@@ -59,82 +59,154 @@ def crear_ventana_Info():
     global ventana_Info, contador
     ventana_Info = tk.Toplevel(menu)          #Configuración de la ventana información
     ventana_Info.title("Ficha personal")
-    ventana_Info.geometry("800x700")
+    ventana_Info.geometry("800x650")
     ventana_Info.resizable(False, False)
     ventana_Info.protocol("WM_DELETE_WINDOW", cerrar_ventana_Info)  #Manejo de ventanas
     contador += 1                               #Contador de ventana abierta
 
- #Canva de la ventana información
+ #Canva de la ventana información y scrollbar
     canva_i = tk.Canvas(ventana_Info, width=780, height=660, bg="white")
     canva_i.pack(side="left", fill="both")
     scrollbar = tk.Scrollbar(ventana_Info, orient="vertical", command=canva_i.yview)
-    canva_i.configure(yscrollcommand=scrollbar.set)
+    canva_i.configure(yscrollcommand=scrollbar.set)      #Actualiza el canvas con el movimiento
     scrollbar.pack(side="right", fill="y")
-    
+    #Permite hacer scroll con los widgets del canvas
     frame_contenido = tk.Frame(canva_i, bg="white")
     canva_i.create_window((0, 0), window=frame_contenido, anchor="nw")
 
+ #Cambia hasta donde se puede mover la ventana cada que se agrega un nuevo widget
     def actualizar_scroll(event):
         canva_i.configure(scrollregion=canva_i.bbox("all"))
     frame_contenido.bind("<Configure>", actualizar_scroll)
 
+ #Titulo de ficha personal
     labeli = tk.Label(frame_contenido, text="Ficha Personal",
              bg="white", font=("verdana", 18, "bold"))
     labeli.pack(padx=300, pady=10)
 
+ #Titulo datos personales
     data = tk.Label(frame_contenido, text="Datos Personales",
              bg="white", font=("verdana", 13, "bold"))
     data.pack(anchor="w", padx=20, pady=5)
-
+ 
+ #Texto con el nombre
     nomb = tk.Label(frame_contenido, text="Nombre:   Dominick Robles Samudio",
              bg="white", font=("verdana", 11))
     nomb.pack(anchor="w", padx=40)
-
+ 
+ #Texto con el carnet
     carnt = tk.Label(frame_contenido, text="Carnet:     2026093868",
              bg="white", font=("verdana", 11))
     carnt.pack(anchor="w", padx=40)
-
+ 
+ #Texto con la edad
     edad = tk.Label(frame_contenido, text="Edad:       19 años",
              bg="white", font=("verdana", 11))
     edad.pack(anchor="w", padx=40, pady=(0,10))
+ 
+ #Espacio para la biografía 
+    bio = tk.Frame(frame_contenido, bg="gray", height=2, width=760)
+    bio.pack(pady=5)
 
-    tk.Frame(frame_contenido, bg="gray", height=2, width=760).pack(pady=5)
-    tk.Label(frame_contenido, text="Biografía",
-             bg="white", font=("verdana", 13, "bold")).pack(anchor="w", padx=20, pady=5)
+ #Titulo biografía
+    biot = tk.Label(frame_contenido, text="Biografía",
+             bg="white", font=("verdana", 13, "bold"))
+    biot.pack(anchor="w", padx=20, pady=5)
 
-    parra = tk.Label(frame_contenido,
+    parrafb = tk.Label(frame_contenido,
              text="Mi nombre es Dominick, tengo 19 años, soy de Jaco y estoy estudiando ingeniería en computadores en el Tecnológico de Costa Rica.",
              bg="white", font=("verdana", 12),
              wraplength=720, justify="left")
-    parra.pack(anchor="w", padx=30)  
-   
-    tk.Frame(frame_contenido, bg="gray", height=2, width=760).pack(pady=5)
-    tk.Label(frame_contenido, text="Lugar donde vivo:",
-             bg="white", font=("verdana", 13, "bold")).pack(anchor="w", padx=20, pady=5)
+    parrafb.pack(anchor="w", padx=30)  
+ 
+ #Espacio para imagen del mapa
+    mp = tk.Frame(frame_contenido, bg="gray", height=2, width=760)
+    mp.pack(pady=5)
 
-    if os.path.exists("mapacasa.png"):
-        mapa = tk.PhotoImage(file="mapacasa.png")
-        mapa = mapa.subsample(max(1, mapa.width() // 320), max(1, mapa.height() // 250))
-        lbl_mapa = tk.Label(frame_contenido, image=mapa, bg="white")
-        lbl_mapa.image = mapa
+ #texto para el mapa
+    tmp = tk.Label(frame_contenido, text="Lugar en donde vivo:",
+             bg="white", font=("verdana", 13, "bold"))
+    tmp.pack(anchor="w", padx=20, pady=5)
+ 
+ #
+    if os.path.exists("mapacasa.png"): #verifica el archivo
+        mapa = tk.PhotoImage(file="mapacasa.png") #carga la imagen
+        mapa = mapa.subsample(max(1, mapa.width() // 320), max(1, mapa.height() // 250)) #ajusta el tamaño
+        lbl_mapa = tk.Label(frame_contenido, image=mapa, bg="white")  #widget de la imagen
+        lbl_mapa.image = mapa  #evita que se elimine la imagen
         lbl_mapa.pack(pady=5)
-
+ 
+ #label texto
     foto = tk.Label(frame_contenido, text="Fotografía:",
              bg="white", font=("verdana", 11, "bold"))
-    foto.pack(anchor="w", padx=20)
+    foto.pack(anchor="w", padx=20) 
 
-    if os.path.exists("foto-perso.png"):
-        foto = tk.PhotoImage(file="foto-perso.png")
-        foto = foto.subsample(max(1, foto.width() // 180), max(1, foto.height() // 280))  # ← imagen más grande
+ #Se utiliza lo mismo que con lo anterior
+    if os.path.exists("foto-perso.png"): 
+        foto = tk.PhotoImage(file="foto-perso.png")  
+        foto = foto.subsample(max(1, foto.width() // 180), max(1, foto.height() // 280))  
         lbl_foto = tk.Label(frame_contenido, image=foto, bg="white")
         lbl_foto.image = foto
         lbl_foto.pack(pady=5)
+
+    conte = tk.Frame(frame_contenido, bg="gray", height=2, width=760)
+    conte.pack(pady=5)
+
+    artt = tk.Label(frame_contenido, text="Artista Favorito",
+             bg="white", font=("verdana", 13, "bold"))
+    artt.pack(anchor="w", padx=20, pady=5)
+
+    artn = tk.Label(frame_contenido, text="Nombre:   Alvaro Díaz",
+             bg="white", font=("verdana", 11))
+    artn.pack(anchor="w", padx=40)
+ 
+    artg = tk.Label(frame_contenido, text="Género:    Reguetón",
+             bg="white", font=("verdana", 11))
+    artg.pack(anchor="w", padx=40, pady=(0,10))
+
+    if os.path.exists("foto_artista.png"):
+        foto_art = tk.PhotoImage(file="foto_artista.png")
+        foto_art = foto_art.subsample(max(1, foto_art.width() // 250), max(1, foto_art.height() // 250))  
+        lbl_art = tk.Label(frame_contenido, image=foto_art, bg="white")
+        lbl_art.image = foto_art
+        lbl_art.pack(pady=5)
+ 
+ #Espacio para el texto de la canción
+    music =tk.Frame(frame_contenido, bg="gray", height=2, width=760)
+    music.pack(pady=5)
+
+   #Texto canción 
+    texmus = tk.Label(frame_contenido, text="Canción (10 segundos):",
+             bg="white", font=("verdana", 13, "bold"))
+    texmus.pack(anchor="w", padx=20, pady=5)
+
+ #Espacio canción y botones
+    frame_audio = tk.Frame(frame_contenido, bg="white")
+    frame_audio.pack(pady=5)
+
+    #Funcion para iniciar a reproducir la canción
+    def reproducir():
+        if os.path.exists("cancion.mp3"):   
+            pygame.mixer.music.load("cancion.mp3") #carga el archivo
+            pygame.mixer.music.play()   #reproduce el audio
+    
+    #Funcion para detener la canción
+    def detener():
+        pygame.mixer.music.stop()
+
+    tk.Button(frame_audio, text="▶ Reproducir", command=reproducir,
+              font=("verdana", 11), bg="green", fg="white", width=12).pack(side="left", padx=10)
+    tk.Button(frame_audio, text="⏹ Detener", command=detener,
+              font=("verdana", 11), bg="red", fg="white", width=12).pack(side="left", padx=10)
    
     
 
- #Boton para volver al menú
-    #Volver_i = tk.Button(canva_i, text="Volver al Menú", command=lambda:cerrar_ventana_Info())
-    #Volver_i.place(x=250, y=400 )
+    volveri = tk.Frame(frame_contenido, bg="gray", height=2, width=760)
+    volveri.pack(pady=10)
+    volverim = tk.Button(frame_contenido, text="Volver al Menú",
+              command=cerrar_ventana_Info,
+              font=("verdana", 11))
+    volverim.pack(pady=10)
 
 #Funcion para abir la ventana de información 
 def abrir_ventana_Info():
