@@ -82,21 +82,59 @@ def crear_ventana_Info():
              bg="white", font=("verdana", 18, "bold"))
     labeli.pack(padx=300, pady=10)
 
-    tk.Label(frame_contenido, text="Datos Personales",
+    data = tk.Label(frame_contenido, text="Datos Personales",
+             bg="white", font=("verdana", 13, "bold"))
+    data.pack(anchor="w", padx=20, pady=5)
+
+    nomb = tk.Label(frame_contenido, text="Nombre:   Dominick Robles Samudio",
+             bg="white", font=("verdana", 11))
+    nomb.pack(anchor="w", padx=40)
+
+    carnt = tk.Label(frame_contenido, text="Carnet:     2026093868",
+             bg="white", font=("verdana", 11))
+    carnt.pack(anchor="w", padx=40)
+
+    edad = tk.Label(frame_contenido, text="Edad:       19 años",
+             bg="white", font=("verdana", 11))
+    edad.pack(anchor="w", padx=40, pady=(0,10))
+
+    tk.Frame(frame_contenido, bg="gray", height=2, width=760).pack(pady=5)
+    tk.Label(frame_contenido, text="Biografía",
              bg="white", font=("verdana", 13, "bold")).pack(anchor="w", padx=20, pady=5)
 
-    tk.Label(frame_contenido, text="Nombre:   Dominick Robles Samudio",
-             bg="white", font=("verdana", 11)).pack(anchor="w", padx=40)
-    tk.Label(frame_contenido, text="Carnet:     2026093868",
-             bg="white", font=("verdana", 11)).pack(anchor="w", padx=40)
-    tk.Label(frame_contenido, text="Edad:       19 años",
-             bg="white", font=("verdana", 11)).pack(anchor="w", padx=40, pady=(0,10))
+    parra = tk.Label(frame_contenido,
+             text="Mi nombre es Dominick, tengo 19 años, soy de Jaco y estoy estudiando ingeniería en computadores en el Tecnológico de Costa Rica.",
+             bg="white", font=("verdana", 12),
+             wraplength=720, justify="left")
+    parra.pack(anchor="w", padx=30)  
+   
+    tk.Frame(frame_contenido, bg="gray", height=2, width=760).pack(pady=5)
+    tk.Label(frame_contenido, text="Lugar donde vivo:",
+             bg="white", font=("verdana", 13, "bold")).pack(anchor="w", padx=20, pady=5)
 
+    if os.path.exists("mapacasa.png"):
+        mapa = tk.PhotoImage(file="mapacasa.png")
+        mapa = mapa.subsample(max(1, mapa.width() // 320), max(1, mapa.height() // 250))
+        lbl_mapa = tk.Label(frame_contenido, image=mapa, bg="white")
+        lbl_mapa.image = mapa
+        lbl_mapa.pack(pady=5)
 
+    foto = tk.Label(frame_contenido, text="Fotografía:",
+             bg="white", font=("verdana", 11, "bold"))
+    foto.pack(anchor="w", padx=20)
+
+    if os.path.exists("foto-perso.png"):
+        foto = tk.PhotoImage(file="foto-perso.png")
+        foto = foto.subsample(max(1, foto.width() // 180), max(1, foto.height() // 280))  # ← imagen más grande
+        lbl_foto = tk.Label(frame_contenido, image=foto, bg="white")
+        lbl_foto.image = foto
+        lbl_foto.pack(pady=5)
+   
+    
 
  #Boton para volver al menú
-    Volver_i = tk.Button(canva_i, text="Volver al Menú", command=lambda:cerrar_ventana_Info())
-    Volver_i.place(x=250, y=400 )
+    #Volver_i = tk.Button(canva_i, text="Volver al Menú", command=lambda:cerrar_ventana_Info())
+    #Volver_i.place(x=250, y=400 )
 
 #Funcion para abir la ventana de información 
 def abrir_ventana_Info():
